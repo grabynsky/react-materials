@@ -1,46 +1,35 @@
-import React, {FC, FormEvent, useState} from 'react';
+import React, {FC} from 'react';
 import styles from './FormComponent.model.css'
+import {useForm} from "react-hook-form";
 
 type Props = {
     username: string;
     password: string;
-
+    age:number;
 }
 
 const FormComponent: FC = () => {
 
-    const [formState, setFormState] = useState<Props>({
-        username: 'User name',
-        password: 'password',
-    })
+    let {
+        register ,
+        handleSubmit
+    } = useForm<Props>()
 
+    const formSubmitCustomHandler = (data:Props) => {
+            console.log(data)
 
-    const handlerSubmit = (event:FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        let user = {
-            username: formState.username,
-            password: formState.password,
-        }
-        console.log(user);
-    };
-
-    const handlerInputChange = (event: FormEvent<HTMLInputElement>) => {
-        let input = event.target as HTMLInputElement;
-        setFormState({
-            ...formState,
-            [input.name]: input.value,
-        })
     };
     return (
         <div>
-            <form className={styles.form} onSubmit={handlerSubmit}>
+            <form
+                className={styles.form}
+                onSubmit={handleSubmit(formSubmitCustomHandler)}
+            >
                 <label>User:
                     <input
                         className={styles.labelForm}
                         type="text"
-                        name={'username'}
-                        value={formState.username}
-                        onInput={handlerInputChange}
+                        {...register('username')}
                     />
                 </label>
 
@@ -48,9 +37,15 @@ const FormComponent: FC = () => {
                     <input
                         className={styles.labelForm}
                         type="text"
-                        name={'password'}
-                        value={formState.password}
-                        onInput={handlerInputChange}
+                        {...register('password')}
+                    />
+                </label>
+
+                <label>Age:
+                    <input
+                        className={styles.labelForm}
+                        type='number'
+                        {...register('age')}
                     />
                 </label>
 
