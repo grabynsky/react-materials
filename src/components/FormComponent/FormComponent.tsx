@@ -10,10 +10,12 @@ type Props = {
 
 const FormComponent: FC = () => {
 
-    let {
+    let {formState: {errors, isValid},
         register ,
         handleSubmit
-    } = useForm<Props>()
+    } = useForm<Props>({
+        mode: 'all',
+    })
 
     const formSubmitCustomHandler = (data:Props) => {
             console.log(data)
@@ -21,6 +23,7 @@ const FormComponent: FC = () => {
     };
     return (
         <div>
+
             <form
                 className={styles.form}
                 onSubmit={handleSubmit(formSubmitCustomHandler)}
@@ -37,19 +40,35 @@ const FormComponent: FC = () => {
                     <input
                         className={styles.labelForm}
                         type="text"
-                        {...register('password')}
+                        {...register('password', {
+                            required: true,
+                            minLength: {value: 5, message: 'Must be long'}
+
+                        })}
                     />
+                    {
+                        errors.password && <div>{errors.password.message}</div>
+                    }
                 </label>
+
+                {
+                    errors.age && <div>{errors.age.message}</div>
+                }
 
                 <label>Age:
                     <input
                         className={styles.labelForm}
                         type='number'
-                        {...register('age')}
+                        {...register('age', {
+                            required: true,
+                            valueAsNumber: true,
+                            min: {value: 1, message: 'age too small'},
+                            max: {value: 132, message: 'age too big'}
+                        })}
                     />
                 </label>
 
-                <button>Send</button>
+                <button disabled={!isValid}>Send</button>
 
             </form>
         </div>
