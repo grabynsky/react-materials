@@ -13,8 +13,8 @@ const TodoComponent: FC<IProps> = ({todos}) => {
                     {
                         todos.map((todo) => (
                             <li key={todo.id}>
-                                <Link to={todo.id.toString()}>
-                                    {todo.todo}
+                                <Link to={todo.id.toString()} state={todo}>
+                                    {todo.id} {todo.todo}
                                 </Link>
                             </li>)
                         )
