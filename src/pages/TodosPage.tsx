@@ -8,10 +8,10 @@ const TodosPage = () => {
     const [todos, setTodos] = useState<ITodo[]>([]);
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/todos')
+        fetch('https://dummyjson.com/todos')
             .then(value => value.json())
             .then(value => {
-                setTodos(value)
+                setTodos(value.todos)
             })
     }, []);
     return (
