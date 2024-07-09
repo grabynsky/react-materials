@@ -1,6 +1,8 @@
 import React, {FC} from 'react';
 import styles from './FormComponent.model.css'
 import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
+import userValidator from "../../validators/user.validator";
 
 type Props = {
     username: string;
@@ -15,6 +17,7 @@ const FormComponent: FC = () => {
         handleSubmit
     } = useForm<Props>({
         mode: 'all',
+        resolver: joiResolver(userValidator)
     })
 
     const formSubmitCustomHandler = (data:Props) => {
@@ -34,37 +37,31 @@ const FormComponent: FC = () => {
                         type="text"
                         {...register('username')}
                     />
+                    {
+                        errors.username && <div>{errors.username?.message}</div>
+                    }
                 </label>
 
                 <label>Password:
                     <input
                         className={styles.labelForm}
                         type="text"
-                        {...register('password', {
-                            required: true,
-                            minLength: {value: 5, message: 'Must be long'}
-
-                        })}
+                        {...register('password')}
                     />
                     {
-                        errors.password && <div>{errors.password.message}</div>
+                        errors.password && <div>{errors.password?.message}</div>
                     }
                 </label>
 
                 {
-                    errors.age && <div>{errors.age.message}</div>
+                    errors.age && <div>{errors.age?.message}</div>
                 }
 
                 <label>Age:
                     <input
                         className={styles.labelForm}
                         type='number'
-                        {...register('age', {
-                            required: true,
-                            valueAsNumber: true,
-                            min: {value: 1, message: 'age too small'},
-                            max: {value: 132, message: 'age too big'}
-                        })}
+                        {...register('age')}
                     />
                 </label>
 
