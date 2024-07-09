@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import TodoComponent from "../components/todo-component/TodoComponent";
 import {ITodo} from "../models/ITodo";
+import {Outlet} from "react-router-dom";
 
 const TodosPage = () => {
 
@@ -15,6 +16,9 @@ const TodosPage = () => {
     }, []);
     return (
         <div>
+            <hr/>
+            <Outlet/>
+            <hr/>
             <TodoComponent todos={todos}/>
         </div>
     );

@@ -25,8 +25,11 @@ let router = createBrowserRouter([
             {path: 'users', element: <UsersPages/>},
             {path: 'posts', element: <PostsPage/>},
             {path: 'comments', element: <CommentsPage/>},
-            {path: 'todos', element: <TodosPage/>},
-            {path: 'todos/:id', element: <TodoPage/>}
+            {path: 'todos', element: <TodosPage/>, children:[
+                    {path:':id', element: <TodoPage/>}
+                ]},
+
+            // {path: 'todos/:id', element: <TodoPage/>}
         ]
     },
 ])

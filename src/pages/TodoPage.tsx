@@ -6,7 +6,7 @@ const TodoPage = () => {
 
     return (
         <div>
-            {id}
+            Todos Page {id}
         </div>
     );
 };
