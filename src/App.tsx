@@ -1,12 +1,17 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import './App.css';
-import FormComponent from "./components/FormComponent/FormComponent";
+import Cars from "./components/cars/Cars";
+import CarForm from "./components/CarForm/CarForm";
 
 const App: FC = () => {
+
+    const [trigger, setTrigger] = useState<boolean>(false)
   return (
     <div className="App">
 
-      <FormComponent/>
+        <CarForm setTrigger={setTrigger}/>
+        <hr/>
+        <Cars trigger={trigger}/>
 
     </div>
   );

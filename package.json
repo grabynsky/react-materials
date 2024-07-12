@@ -17,7 +17,8 @@
     "web-vitals": "^2.1.4",
     "react-hook-form": "^7.52.1",
     "joi": "^17.13.3",
-    "@hookform/resolvers": "^3.9.0"
+    "@hookform/resolvers": "^3.9.0",
+    "axios": "^1.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
