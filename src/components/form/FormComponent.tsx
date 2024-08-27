@@ -1,64 +1,76 @@
-import React, {FormEvent, useState} from 'react';
+import React from 'react';
+import {useForm} from "react-hook-form";
 
 interface IFormType {
     username: string,
     password: string,
+    age: number,
 }
 
 const FormComponent = () => {
-    const [formState, setFormState] = useState<IFormType>({
-        username: '',
-        password: '',
+
+    const {
+        handleSubmit,
+        register,
+        formState: {errors, isValid}
+    } = useForm<IFormType>({
+        mode: "all"
     })
 
-// ---------------------------------------------
-//     const handlerUserName = (e: FormEvent<HTMLInputElement>) => {
-//         e.preventDefault();
-//         const input = e.target as HTMLInputElement;
-//         setFormState({...formState, username: input.value});
-//         console.log(input.value)
-//     };
-
-    // ---------------------------------------------
-    // const handlerPasswordName = (e: FormEvent<HTMLInputElement>) => {
-    //     e.preventDefault();
-    //     const input = e.target as HTMLInputElement;
-    //     setFormState({...formState, password: input.value});
-    //     console.log(input.value)
-    // };
-    // --------------------------------------------
-
-    const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        let user = {
-            username: formState.username,
-            password: formState.password,
-        }
-        console.log(user)
+    const customHandler = (formdata: IFormType) => {
+        console.log(formdata)
     };
-
-    // ------------------------------------------------
-
-
-    const handlerInputName = (e: FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-
-        const input = e.target as HTMLInputElement;
-        console.log(input.name)
-
-        setFormState({...formState, [input.name]: input.value})
-
-    };
-
-
-
     return (
         <main>
-            <form onSubmit={handlerSubmit}>
-                <input type="text" name={'username'} value={formState.username} onChange={handlerInputName}/>
-                <input type="text" name={'password'} value={formState.password} onChange={handlerInputName}/>
+            <form onSubmit={handleSubmit(customHandler)}>
+                <label>
+                    <div>{errors.username && <span>{errors.username.message}</span>}</div>
 
-                <button>submit</button>
+                    <input
+                        type="text"
+                        {...register('username', {
+                            required: true,
+                            pattern: {
+                                value: /\w+/,
+                                message: 'Wrong name',
+                            },
+                        })}
+                    />
+                </label>
+
+                <label>
+                    <div>{errors.password && <span>{errors.password.message}</span>}</div>
+
+                    <input
+                        type="text"
+                        {...register('password', {
+                            required: true,
+                            minLength: {
+                                value: 3,
+                                message: 'Password too short'
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: 'Password too long'
+                            }
+                        })}
+                    />
+                </label>
+
+                <label>
+                    <div>{errors.age && <span>{errors.age.message}</span>}</div>
+                    <input type="number" {...register('age', {
+                        required: true,
+                        valueAsNumber: true,
+                        min: {value: 3, message: 'age too small'},
+                        max: {value: 117, message: 'age too long'}
+                    })}
+                    />
+                </label>
+
+                <div>
+                    <button disabled={!isValid}>submit</button>
+                </div>
             </form>
         </main>
     );
