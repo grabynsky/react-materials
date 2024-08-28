@@ -1,5 +1,7 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
+import {userValidator} from "./validators/user.validator";
 
 interface IFormType {
     username: string,
@@ -14,7 +16,8 @@ const FormComponent = () => {
         register,
         formState: {errors, isValid}
     } = useForm<IFormType>({
-        mode: "all"
+        mode: "all",
+        resolver:joiResolver(userValidator)
     })
 
     const customHandler = (formdata: IFormType) => {
@@ -28,13 +31,7 @@ const FormComponent = () => {
 
                     <input
                         type="text"
-                        {...register('username', {
-                            required: true,
-                            pattern: {
-                                value: /\w+/,
-                                message: 'Wrong name',
-                            },
-                        })}
+                        {...register('username')}
                     />
                 </label>
 
@@ -43,28 +40,13 @@ const FormComponent = () => {
 
                     <input
                         type="text"
-                        {...register('password', {
-                            required: true,
-                            minLength: {
-                                value: 3,
-                                message: 'Password too short'
-                            },
-                            maxLength: {
-                                value: 10,
-                                message: 'Password too long'
-                            }
-                        })}
+                        {...register('password')}
                     />
                 </label>
 
                 <label>
                     <div>{errors.age && <span>{errors.age.message}</span>}</div>
-                    <input type="number" {...register('age', {
-                        required: true,
-                        valueAsNumber: true,
-                        min: {value: 3, message: 'age too small'},
-                        max: {value: 117, message: 'age too long'}
-                    })}
+                    <input type="number" {...register('age')}
                     />
                 </label>
 
