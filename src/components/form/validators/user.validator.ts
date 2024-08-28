@@ -9,7 +9,7 @@ const userValidator = Joi.object({
         }),
     password: Joi.string().min(3).max(10).required().messages({
         'string.min.base': 'min is not ',
-        'string.max.base': ''
+        'string.max.base': 'dhreh'
     }),
     age: Joi.number().min(2).max(117).required()
 })

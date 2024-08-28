@@ -2,6 +2,7 @@ import React from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {userValidator} from "./validators/user.validator";
+import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
 
 interface IFormType {
     username: string,
@@ -23,6 +24,8 @@ const FormComponent = () => {
     const customHandler = (formdata: IFormType) => {
         console.log(formdata)
     };
+
+
     return (
         <main>
             <form onSubmit={handleSubmit(customHandler)}>

@@ -1,14 +1,15 @@
-import React, {FC} from 'react';
-import './App.css';
-import FormComponent from "./components/form/FormComponent";
+import React from 'react';
+import {Outlet} from "react-router-dom";
+import HeaderComponent from "./components/header/HeaderComponent";
 
-const App: FC = () => {
+const App = () => {
     return (
-        <div className="App">
-
-            <FormComponent/>
+        <div>
+            <HeaderComponent/>
+            <Outlet/>
         </div>
     );
-}
+};
 
 export default App;
+
